@@ -21,6 +21,6 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/finansai', function () {
         return view('finansai');
-    });
+    })->name('finansai');
 
 });
