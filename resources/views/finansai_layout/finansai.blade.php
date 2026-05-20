@@ -6,7 +6,7 @@
             Finansų programa
         </h1>
 
-        <!-- PRIDĖJIMO FORMA -->
+        <!-- forma -->
 
         <div class="bg-white p-6 rounded shadow mb-8">
 
@@ -16,7 +16,10 @@
                 <div class="mb-4">
                     <label class="block mb-1">Tipas</label>
 
-                    <select name="tipas" class="w-full border rounded p-2">
+                    <select
+                        name="tipas"
+                        class="w-full border rounded p-2 pr-8"
+                    >
                         <option value="Pajamos">Pajamos</option>
                         <option value="Išlaidos">Išlaidos</option>
                     </select>
@@ -62,18 +65,20 @@
                 >
                     Pridėti įrašą
                 </button>
+
             </form>
+
         </div>
 
 
-        <!-- ĮRAŠŲ LENTELĖ -->
+        <!-- cia irasai -->
 
-        <div class="bg-white p-6 rounded shadow">
+        <div class="bg-white p-6 rounded shadow overflow-x-auto">
 
             <table class="w-full table-auto border-collapse border">
 
                 <thead>
-                    <tr class="bg-g ray-200">
+                    <tr class="bg-gray-200">
                         <th class="border p-2">Tipas</th>
                         <th class="border p-2">Kategorija</th>
                         <th class="border p-2">Suma</th>
@@ -88,78 +93,123 @@
 
                     <tr>
 
-                        <form action="{{ route('finansai.update', $irasas->id) }}" method="POST">
-                            @csrf
-                            @method('PUT')
+                        <td class="border p-2">
+                            {{ $irasas->tipas }}
+                        </td>
 
-                            <td class="border p-2">
-                                <select name="tipas" class="border rounded p-1">
-                                    <option value="Pajamos"
-                                        {{ $irasas->tipas == 'Pajamos' ? 'selected' : '' }}>
-                                        Pajamos
-                                    </option>
+                        <td class="border p-2">
+                            {{ $irasas->kategorija }}
+                        </td>
 
-                                    <option value="Išlaidos"
-                                        {{ $irasas->tipas == 'Išlaidos' ? 'selected' : '' }}>
-                                        Išlaidos
-                                    </option>
-                                </select>
-                            </td>
+                        <td class="border p-2">
+                            €{{ number_format($irasas->suma, 2) }}
+                        </td>
 
-                            <td class="border p-2">
-                                <input  
-                                    type="text"
-                                    name="kategorija"
-                                    value="{{ $irasas->kategorija }}"
-                                    class="border rounded p-1"
-                                >
-                            </td>
+                        <td class="border p-2">
+                            {{ $irasas->aprasymas }}
+                        </td>
 
-                            <td class="border p-2">
-                                <input
-                                    type="number"
-                                    step="0.01"
-                                    name="suma"
-                                    value="{{ $irasas->suma }}"
-                                    class="border rounded p-1"
-                                >
-                            </td>
+                        <td class="border p-2">
 
-                            <td class="border p-2">
-                                <input
-                                    type="text"
-                                    name="aprasymas"
-                                    value="{{ $irasas->aprasymas }}"
-                                    class="border rounded p-1"
-                                >
-                            </td>
 
-                            <td class="border p-2">
-                                <div class="flex gap-2"> 
+                            <div class="flex gap-2">
+
                                 <button
-                                    type="submit"
-                                    class="bg-green-500 text-white px-3 py-1 rounded"
+                                    onclick="document.getElementById('edit-{{ $irasas->id }}').classList.toggle('hidden')"
+                                    class="bg-yellow-500 text-white px-2 py-1 text-sm rounded"
                                 >
                                     Redaguoti
                                 </button>
 
-                        </form>
+                                <form
+                                    action="{{ route('finansai.delete', $irasas->id) }}"
+                                    method="POST"
+                                >
+                                    @csrf
+                                    @method('DELETE')
+
+                                    <button
+                                        type="submit"
+                                        class="bg-red-500 text-white px-2 py-1 text-sm rounded"
+                                    >
+                                        Trinti
+                                    </button>
+
+                                </form>
+
+                            </div>
 
 
-                        <form action="{{ route('finansai.delete', $irasas->id) }}" method="POST">
-                            @csrf
-                            @method('DELETE')
+                            <!-- cia koregavimo forma -->
 
-                            <button
-                                type="submit"
-                                class="bg-red-500 text-white px-3 py-1 rounded"
+                            <div
+                                id="edit-{{ $irasas->id }}"
+                                class="hidden mt-3 border rounded p-3 bg-gray-50"
                             >
-                                Trinti
-                            </button>
-                        </form>
 
-                            </td>
-                        </div>
+                                <form
+                                    action="{{ route('finansai.update', $irasas->id) }}"
+                                    method="POST"
+                                >
+                                    @csrf
+                                    @method('PUT')
+
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+
+                                        <select
+                                            name="tipas"
+                                            class="border rounded p-2 pr-8 text-sm"
+                                        >
+                                            <option
+                                                value="Pajamos"
+                                                {{ $irasas->tipas == 'Pajamos' ? 'selected' : '' }}
+                                            >
+                                                Pajamos
+                                            </option>
+
+                                            <option
+                                                value="Išlaidos"
+                                                {{ $irasas->tipas == 'Išlaidos' ? 'selected' : '' }}
+                                            >
+                                                Išlaidos
+                                            </option>
+                                        </select>
+
+                                        <input
+                                            type="text"
+                                            name="kategorija"
+                                            value="{{ $irasas->kategorija }}"
+                                            class="border rounded p-2 text-sm"
+                                        >
+
+                                        <input
+                                            type="number"
+                                            step="0.01"
+                                            name="suma"
+                                            value="{{ $irasas->suma }}"
+                                            class="border rounded p-2 text-sm"
+                                        >
+
+                                        <textarea
+                                            name="aprasymas"
+                                            class="border rounded p-2 text-sm"
+                                            rows="2"
+                                        >{{ $irasas->aprasymas }}</textarea>
+
+                                    </div>
+
+                                    <button
+                                        type="submit"
+                                        class="mt-2 bg-green-500 text-white px-3 py-1 text-sm rounded"
+                                    >
+                                        Išsaugoti
+                                    </button>
+
+                                </form>
+
+                            </div>
+
+                        </td>
 
                     </tr>
 
@@ -167,7 +217,7 @@
 
                 </tbody>
 
-            </table >
+            </table>
 
         </div>
 
