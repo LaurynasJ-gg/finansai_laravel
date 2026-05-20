@@ -4,21 +4,24 @@ namespace App\Http\Controllers;
 
 use App\Models\Finansai;
 use Illuminate\Http\Request;
+use App\Models\Kategorija;
+
 
 class FinansaiController extends Controller
 {
     public function index()
     {
-        $irasai = Finansai::latest()->get();
+        $irasai = Finansai::with('kategorija')->latest()->get();
+        $kategorijos = Kategorija::all();
 
-        return view('finansai_layout.finansai', compact('irasai'));
+        return view('finansai_layout.finansai', compact('irasai', 'kategorijos'));
     }
 
     public function store(Request $request)
     {
         Finansai::create([
             'tipas' => $request->tipas,
-            'kategorija' => $request->kategorija,
+            'kategorija_id' => $request->kategorija_id,
             'suma' => $request->suma,
             'aprasymas' => $request->aprasymas,
         ]);
@@ -32,7 +35,7 @@ class FinansaiController extends Controller
 
         $irasas->update([
             'tipas' => $request->tipas,
-            'kategorija' => $request->kategorija,
+            'kategorija_id' => $request->kategorija_id,
             'suma' => $request->suma,
             'aprasymas' => $request->aprasymas,
         ]);

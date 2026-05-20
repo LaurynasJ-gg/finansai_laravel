@@ -8,8 +8,13 @@ class Finansai extends Model
 {
     protected $fillable = [
         'tipas',
-        'kategorija',
+        'kategorija_id',
         'suma',
         'aprasymas'
     ];
+
+    public function kategorija()
+    {
+        return $this->belongsTo(Kategorija::class);
+    }
 }

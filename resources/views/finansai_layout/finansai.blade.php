@@ -28,13 +28,21 @@
                 <div class="mb-4">
                     <label class="block mb-1">Kategorija</label>
 
-                    <input
-                        type="text"
-                        name="kategorija"
-                        class="w-full border rounded p-2"
-                        placeholder="Pvz: Maistas"
+                    <select
+                        name="kategorija_id"
+                        class="w-full border rounded p-2 pr-8"
                         required
                     >
+
+                        @foreach($kategorijos as $kategorija)
+
+                            <option value="{{ $kategorija->id }}">
+                                {{ $kategorija->pavadinimas }}
+                            </option>
+
+                        @endforeach
+
+                    </select>
                 </div>
 
                 <div class="mb-4">
@@ -51,7 +59,7 @@
                 </div>
 
                 <div class="mb-4">
-                    <label class="block mb-1">Aprašymas</label>
+                    <label class="block mb-1">Aprasymas</label>
 
                     <textarea
                         name="aprasymas"
@@ -98,7 +106,7 @@
                         </td>
 
                         <td class="border p-2">
-                            {{ $irasas->kategorija }}
+                             {{ $irasas->kategorija->pavadinimas ?? '-' }}
                         </td>
 
                         <td class="border p-2">
@@ -175,12 +183,23 @@
                                             </option>
                                         </select>
 
-                                        <input
-                                            type="text"
-                                            name="kategorija"
-                                            value="{{ $irasas->kategorija }}"
-                                            class="border rounded p-2 text-sm"
-                                        >
+                                        <select
+                                            name="kategorija_id"
+                                            class="border rounded p-2 pr-8 text-sm"
+                                        >      
+
+                                            @foreach($kategorijos as $kategorija)
+
+                                                <option
+                                                    value="{{ $kategorija->id }}"
+                                                    {{ $irasas->kategorija_id == $kategorija->id ? 'selected' : '' }}
+                                                >
+                                                    {{ $kategorija->pavadinimas }}
+                                                </option>
+
+                                            @endforeach
+
+                                        </select>
 
                                         <input
                                             type="number"

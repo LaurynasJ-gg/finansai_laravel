@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FinansaiController;
+use App\Http\Controllers\KategorijaController;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -28,3 +30,5 @@ Route::middleware(['auth'])->group(function () {
 
     Route::delete('/finansai/delete/{id}', [FinansaiController::class, 'destroy'])->name('finansai.delete');
 });
+
+Route::resource('kategorijos', KategorijaController::class);
