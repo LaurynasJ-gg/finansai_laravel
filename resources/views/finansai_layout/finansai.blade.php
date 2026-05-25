@@ -12,19 +12,6 @@
 
             <form action="{{ route('finansai.store') }}" method="POST">
                 @csrf
-
-                <div class="mb-4">
-                    <label class="block mb-1">Tipas</label>
-
-                    <select
-                        name="tipas"
-                        class="w-full border rounded p-2 pr-8"
-                    >
-                        <option value="Pajamos">Pajamos</option>
-                        <option value="Išlaidos">Išlaidos</option>
-                    </select>
-                </div>
-
                 <div class="mb-4">
                     <label class="block mb-1">Kategorija</label>
 
@@ -163,25 +150,6 @@
                                     @method('PUT')
 
                                     <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
-
-                                        <select
-                                            name="tipas"
-                                            class="border rounded p-2 pr-8 text-sm"
-                                        >
-                                            <option
-                                                value="Pajamos"
-                                                {{ $irasas->tipas == 'Pajamos' ? 'selected' : '' }}
-                                            >
-                                                Pajamos
-                                            </option>
-
-                                            <option
-                                                value="Išlaidos"
-                                                {{ $irasas->tipas == 'Išlaidos' ? 'selected' : '' }}
-                                            >
-                                                Išlaidos
-                                            </option>
-                                        </select>
 
                                         <select
                                             name="kategorija_id"

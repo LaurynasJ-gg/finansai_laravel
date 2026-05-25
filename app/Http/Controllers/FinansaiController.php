@@ -19,22 +19,26 @@ class FinansaiController extends Controller
 
     public function store(Request $request)
     {
+        $kategorija = Kategorija::findOrFail($request->kategorija_id);
+
         Finansai::create([
-            'tipas' => $request->tipas,
+            'tipas' => $kategorija->tipas,
             'kategorija_id' => $request->kategorija_id,
             'suma' => $request->suma,
             'aprasymas' => $request->aprasymas,
         ]);
 
         return redirect()->back();
-    }
+        }
 
     public function update(Request $request, $id)
     {
         $irasas = Finansai::findOrFail($id);
 
+        $kategorija = Kategorija::findOrFail($request->kategorija_id);
+
         $irasas->update([
-            'tipas' => $request->tipas,
+            'tipas' => $kategorija->tipas,
             'kategorija_id' => $request->kategorija_id,
             'suma' => $request->suma,
             'aprasymas' => $request->aprasymas,

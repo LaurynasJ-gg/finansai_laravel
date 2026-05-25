@@ -16,5 +16,5 @@ class Finansai extends Model
     public function kategorija()
     {
         return $this->belongsTo(Kategorija::class);
-    }
+    }   
 }
