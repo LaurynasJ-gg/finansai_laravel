@@ -24,7 +24,7 @@
                         @foreach($kategorijos as $kategorija)
 
                             <option value="{{ $kategorija->id }}">
-                                {{ $kategorija->pavadinimas }}
+                                {{ $kategorija->pavadinimas }} ({{ $kategorija->tipas }})
                             </option>
 
                         @endforeach
