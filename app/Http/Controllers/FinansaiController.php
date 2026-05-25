@@ -14,9 +14,23 @@ class FinansaiController extends Controller
         $irasai = Finansai::with('kategorija')->latest()->get();
         $kategorijos = Kategorija::all();
 
-        return view('finansai_layout.finansai', compact('irasai', 'kategorijos'));
-    }
+        $pajamos = Finansai::where('tipas', 'Pajamos')->sum('suma');
 
+        $islaidos = Finansai::where('tipas', 'Išlaidos')->sum('suma');
+
+        $likutis = $pajamos - $islaidos;
+
+        return view(
+            'finansai_layout.finansai',
+            compact(
+                'irasai',
+                'kategorijos',
+                'pajamos',
+                'islaidos',
+                'likutis'
+            )
+        );
+    }
     public function store(Request $request)
     {
         $kategorija = Kategorija::findOrFail($request->kategorija_id);
