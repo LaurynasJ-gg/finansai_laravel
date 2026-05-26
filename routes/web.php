@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FinansaiController;
 use App\Http\Controllers\KategorijaController;
+use App\Http\Controllers\SuvestineController;
 
 
 Route::get('/', function () {
@@ -32,3 +33,7 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::resource('kategorijos', KategorijaController::class);
+
+
+Route::get('/suvestine', [SuvestineController::class, 'index'])
+    ->name('suvestine');

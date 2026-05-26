@@ -16,8 +16,11 @@
                         {{ __('Finansai') }}
                     </x-nav-link>
                     <x-nav-link href="{{ url('/kategorijos') }}" :active="request()->is('kategorijos')">
-                         {{ __('Kategorijos') }}
+                        {{ __('Kategorijos') }}
                     </x-nav-link>
+                     <x-nav-link href="{{ route('suvestine') }}" :active="request()->routeIs('suvestine')">
+                        {{ __('Suvestinė') }}
+                    </x-nav-link>                    
                 </div>
             </div>
 
