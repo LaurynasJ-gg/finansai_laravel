@@ -42,47 +42,99 @@
 
     </div>
 
-    <div class="bg-white p-6 rounded-xl shadow w-[500px] mx-auto">
+   <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-6xl mx-auto">
+
+    <!-- skritulinė -->
+
+    <div class="bg-white p-6 rounded-xl shadow">
 
         <h2 class="text-xl font-bold mb-4">
-            Išlaidų grafikai
+            Pajamos / Išlaidos
         </h2>
-        
-        <canvas id="pieChart" width="400" height="400"></canvas>
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+        <canvas id="pieChart"></canvas>
+
     </div>
 
-    <script>
+    <!-- stulpelinė -->
 
-        const ctx = document.getElementById('pieChart');
+    <div class="bg-white p-6 rounded-xl shadow">
 
-        new Chart(ctx, {
-            type: 'pie',
+        <h2 class="text-xl font-bold mb-4">
+            Kategorijų stulpelinė diagrama
+        </h2>
 
-            data: {
-                labels: ['Pajamos', 'Išlaidos'],
+        <canvas id="barChart"></canvas>
 
-                datasets: [{
-                    data: [
-                        {{ $pajamos }},
-                        {{ $islaidos }}
-                    ],
+    </div>
 
-                    backgroundColor: [
-                        '#16a34a',
-                        '#dc2626'
-                    ],
+</div>
 
-                    borderWidth: 1
-                }]
-            },
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-            options: {
-                responsive: true,
-                maintainAspectRatio: true
-            }
-        });
+<script>
+    const ctx = document.getElementById('pieChart');
 
-    </script>
+    new Chart(ctx, {
+        type: 'pie',
+
+        data: {
+            labels: ['Pajamos', 'Išlaidos'],
+
+            datasets: [{
+                data: [
+                    {{ $pajamos }},
+                    {{ $islaidos }}
+                ],
+
+                backgroundColor: [
+                    '#16a34a',
+                    '#dc2626'
+                ]
+            }]
+        },
+
+        options: {
+            responsive: true,
+            maintainAspectRatio: true
+        }
+    });
+
+    const barCtx = document.getElementById('barChart');
+
+    new Chart(barCtx, {
+        type: 'bar',
+
+        data: {
+            labels: @json($pagalKategorijas->pluck('pavadinimas')),
+
+            datasets: [{
+                label: 'Suma pagal kategorijas',
+
+                data: @json($pagalKategorijas->pluck('suma')),
+
+                 backgroundColor: [
+                '#16a34a',
+                '#dc2626',
+                '#dc2626',
+                '#dc2626',
+                '#dc2626',
+                '#dc2626',
+                '#dc2626',
+                '#dc2626'
+                ],
+
+                borderWidth: 1
+            }]
+        },
+
+        options: {
+            responsive: true,
+            maintainAspectRatio: true
+        }
+    });
+
+</script>
+
 </x-app-layout>
 
