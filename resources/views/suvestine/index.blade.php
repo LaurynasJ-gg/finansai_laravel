@@ -41,6 +41,12 @@
         </div>
 
     </div>
+    <div class="bg-white p-6 rounded-xl shadow">
+
+        <h2 class="text-xl font-bold mb-4">
+            Išlaidų grafikai
+        </h2>
+    </div>
 
 </x-app-layout>
 
