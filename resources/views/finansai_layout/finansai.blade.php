@@ -64,6 +64,13 @@
 
                     </select>
                 </div>
+                <div> 
+
+                    <label class="block mb-1">Data</label>
+
+                    <input type="date" name="data" class="border rounded p-2">
+
+                </div>
 
                 <div class="mb-4">
                     <label class="block mb-1">Suma</label>
@@ -107,6 +114,7 @@
 
                 <thead>
                     <tr class="bg-gray-200">
+                        <th class="border p-2">Data</th>
                         <th class="border p-2">Tipas</th>
                         <th class="border p-2">Kategorija</th>
                         <th class="border p-2">Suma</th>
@@ -120,6 +128,9 @@
                     @foreach($irasai as $irasas)
 
                     <tr>
+                        <td class="border p-2">
+                            {{ $irasas->data }}
+                        </td>
 
                         <td class="border p-2">
                             {{ $irasas->tipas }}
@@ -184,6 +195,12 @@
 
                                     <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
 
+                                        <input
+                                            type="date"
+                                            name="data"
+                                            value="{{ $irasas->data }}"
+                                            class="border rounded p-2 text-sm"
+                                        />
                                         <select
                                             name="kategorija_id"
                                             class="border rounded p-2 pr-8 text-sm"

@@ -10,6 +10,7 @@ class Finansai extends Model
         'tipas',
         'kategorija_id',
         'suma',
+        'data',
         'aprasymas'
     ];
 

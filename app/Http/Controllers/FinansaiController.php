@@ -39,6 +39,7 @@ class FinansaiController extends Controller
             'tipas' => $kategorija->tipas,
             'kategorija_id' => $request->kategorija_id,
             'suma' => $request->suma,
+            'data' => $request->data,
             'aprasymas' => $request->aprasymas,
         ]);
 
@@ -55,6 +56,7 @@ class FinansaiController extends Controller
             'tipas' => $kategorija->tipas,
             'kategorija_id' => $request->kategorija_id,
             'suma' => $request->suma,
+            'data' => $request->data,
             'aprasymas' => $request->aprasymas,
         ]);
 
