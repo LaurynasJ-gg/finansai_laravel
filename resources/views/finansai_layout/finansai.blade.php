@@ -108,7 +108,48 @@
 
         <!-- cia irasai -->
 
+        
+
         <div class="bg-white p-6 rounded shadow overflow-x-auto">
+            <div class="flex justify-between items-center mb-6">
+
+                <h1 class="text-3xl font-bold text-gray-800">
+                    Finansai
+                </h1>
+
+                <form method="GET">
+
+                <select
+                    name="menuo"
+                    onchange="this.form.submit()"
+                    class="
+                    bg-white
+                    border
+                    border-gray-300
+                    rounded-xl
+                    px-4
+                    py-2
+                    shadow-sm
+                    "
+                >
+
+                <option value="">Visi</option>
+
+                        @foreach($menesiList as $m)
+
+                            <option
+                                value="{{ $m }}"
+                                {{ $menuo == $m ? 'selected' : '' }}>
+                                {{ $m }}
+                            </option>
+
+                        @endforeach
+
+                    </select>
+
+                </form>
+
+            </div>
 
             <table class="w-full table-auto border-collapse border">
 
