@@ -117,6 +117,21 @@
                     Finansai
                 </h1>
 
+                <div class="flex items-center gap-3">
+
+                <a href="{{ route('kategorijos.index') }}"
+                    class="
+                    bg-blue-600
+                    hover:bg-blue-700
+                    text-white
+                    px-4
+                    py-2
+                    rounded-xl
+                    shadow-sm
+                    "
+                > Kategorijos
+                </a>
+
                 <form method="GET">
 
                 <select
@@ -131,23 +146,26 @@
                     py-2
                     shadow-sm
                     "
-                >
+                    >   
 
-                <option value="">Visi</option>
+                    <option value="">Visi</option>
 
-                        @foreach($menesiList as $m)
+                    @foreach($menesiList as $m)
 
-                            <option
-                                value="{{ $m }}"
-                                {{ $menuo == $m ? 'selected' : '' }}>
-                                {{ $m }}
-                            </option>
+                        <option
+                            value="{{ $m }}"
+                            {{ $menuo == $m ? 'selected' : '' }}
+                        >
+                            {{ $m }}
+                        </option>
 
-                        @endforeach
+                    @endforeach
 
-                    </select>
+                </select>
 
                 </form>
+
+                </div>
 
             </div>
 
