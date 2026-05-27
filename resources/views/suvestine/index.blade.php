@@ -6,6 +6,28 @@
             Suvestinė
         </h1>
 
+        <form method="GET" class="mb-6">
+
+            <select
+                    name="menuo"
+                    onchange="this.form.submit()"
+                    class="border rounded-lg px-4 py-2"
+                >
+
+                    <option value=""> Visi </option>
+
+                @foreach($menesiList as $m)
+                    <option
+                        value="{{ $m }}"
+                            {{ $menuo == $m ? 'selected' : '' }}>
+                            {{ $m }}
+                    </option>
+                @endforeach
+
+            </select>
+
+        </form>
+
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
 
             <div class="bg-white p-5 rounded-xl shadow">
@@ -70,7 +92,7 @@
     <div class="bg-white p-6 rounded-xl shadow">
 
         <h2 class="text-xl font-bold mb-4">
-            Mėnesio statistika
+            Mėnesių statistika
         </h2>
 
         <canvas id="lineChart"></canvas>
