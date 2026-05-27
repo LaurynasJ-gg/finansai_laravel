@@ -22,13 +22,31 @@ class SuvestineController extends Controller
             ->get();
 
         $pagalMenesi = Finansai::select(
-                DB::raw("DATE_FORMAT(created_at, '%Y-%m') as menuo"),
-                DB::raw("SUM(suma) as suma")
-            )
+            DB::raw("DATE_FORMAT(data, '%Y-%m') as menuo"),
+
+            DB::raw("
+                COALESCE(SUM(
+                CASE
+                        WHEN tipas = 'pajamos'
+                        THEN suma
+                        ELSE 0
+                    END
+                ),0) as pajamos
+            "),
+
+            DB::raw("
+                COALESCE(SUM(
+                    CASE
+                        WHEN tipas = 'islaidos'
+                        THEN suma
+                        ELSE 0
+                    END
+                ),0) as islaidos
+            ")
+        )
             ->groupBy('menuo')
             ->orderBy('menuo')
             ->get();
-
         return view('suvestine.index', compact(
             'pajamos',
             'islaidos',

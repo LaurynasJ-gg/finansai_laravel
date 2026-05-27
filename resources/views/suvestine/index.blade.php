@@ -44,7 +44,6 @@
 
    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-6xl mx-auto">
 
-    <!-- skritulinė -->
 
     <div class="bg-white p-6 rounded-xl shadow">
 
@@ -56,7 +55,6 @@
 
     </div>
 
-    <!-- stulpelinė -->
 
     <div class="bg-white p-6 rounded-xl shadow">
 
@@ -65,6 +63,17 @@
         </h2>
 
         <canvas id="barChart"></canvas>
+
+    </div>
+
+
+    <div class="bg-white p-6 rounded-xl shadow">
+
+        <h2 class="text-xl font-bold mb-4">
+            Mėnesio statistika
+        </h2>
+
+        <canvas id="lineChart"></canvas>
 
     </div>
 
@@ -131,6 +140,44 @@
         options: {
             responsive: true,
             maintainAspectRatio: true
+        }
+    });
+
+    const lineCtx = document.getElementById('lineChart');
+
+        new Chart(lineCtx, {
+            type: 'line',
+
+        data: {
+            labels: @json($pagalMenesi->pluck('menuo')),
+
+            datasets: [
+                {
+                    label: 'Pajamos',
+                    data: @json($pagalMenesi->pluck('pajamos')),
+                    borderColor: '#16a34a',
+                    backgroundColor: 'rgba(22,163,74,0.2)',
+                    tension: 0.4,
+                fill: false
+                },
+
+                {
+                    label: 'Išlaidos',
+                    data: @json($pagalMenesi->pluck('islaidos')),
+                    borderColor: '#dc2626',
+                    backgroundColor: 'rgba(220,38,38,0.2)',
+                    tension: 0.4,
+                fill: false
+                }
+            ]   
+        },
+
+        options: {
+            responsive: true,
+
+            scales: {
+                y: {beginAtZero: true}
+            }
         }
     });
 
