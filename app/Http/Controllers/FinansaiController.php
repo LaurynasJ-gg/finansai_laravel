@@ -9,16 +9,38 @@ use App\Models\Kategorija;
 
 class FinansaiController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $irasai = Finansai::with('kategorija')->latest()->get();
+        $menuo = $request->menuo;
+        $query = Finansai::with('kategorija');
+        
+        if ($menuo) {
+                $query->whereRaw(
+                "DATE_FORMAT(data, '%Y-%m') = ?",
+                [$menuo]
+            );
+        }
+
+        $irasai = $query
+            ->latest('data')
+            ->get();
+
         $kategorijos = Kategorija::all();
 
-        $pajamos = Finansai::where('tipas', 'Pajamos')->sum('suma');
+        $pajamos = (clone $query)
+            ->where('tipas', 'Pajamos')
+            ->sum('suma');
 
-        $islaidos = Finansai::where('tipas', 'Išlaidos')->sum('suma');
+        $islaidos = (clone $query)
+            ->where('tipas', 'Išlaidos')
+            ->sum('suma');
 
         $likutis = $pajamos - $islaidos;
+
+        $menesiList = Finansai::selectRaw("DATE_FORMAT(data, '%Y-%m') as menuo")
+            ->distinct()
+            ->orderBy('menuo')
+            ->pluck('menuo');
 
         return view(
             'finansai_layout.finansai',
@@ -27,7 +49,9 @@ class FinansaiController extends Controller
                 'kategorijos',
                 'pajamos',
                 'islaidos',
-                'likutis'
+                'likutis',
+                'menesiList',
+                'menuo'
             )
         );
     }
