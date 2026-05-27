@@ -127,7 +127,7 @@
                     border
                     border-gray-300
                     rounded-xl
-                    px-4
+                    px-8
                     py-2
                     shadow-sm
                     "

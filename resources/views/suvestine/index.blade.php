@@ -11,7 +11,7 @@
             <select
                     name="menuo"
                     onchange="this.form.submit()"
-                    class="border rounded-lg px-4 py-2"
+                    class="border rounded-lg px-8 py-2"
                 >
 
                     <option value=""> Visi </option>
