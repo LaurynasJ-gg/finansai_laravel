@@ -30,10 +30,10 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/finansai/update/{id}', [FinansaiController::class, 'update'])->name('finansai.update');
 
     Route::delete('/finansai/delete/{id}', [FinansaiController::class, 'destroy'])->name('finansai.delete');
+    
+    Route::resource('kategorijos', KategorijaController::class);
+
+    Route::get('/suvestine', [SuvestineController::class, 'index'])->name('suvestine');
+    
+    Route::get('/suvestine/pdf', [SuvestineController::class, 'pdf'])->name('suvestine.pdf');
 });
-
-Route::resource('kategorijos', KategorijaController::class);
-
-
-Route::get('/suvestine', [SuvestineController::class, 'index'])
-    ->name('suvestine');
