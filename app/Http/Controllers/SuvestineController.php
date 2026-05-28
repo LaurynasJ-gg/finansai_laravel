@@ -6,6 +6,7 @@ use App\Models\Finansai;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Mail;
 
 class SuvestineController extends Controller
 {
@@ -85,4 +86,36 @@ class SuvestineController extends Controller
             'irasai'
         );
     }
+
+    public function siustiPdf(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'menuo' => 'nullable'
+        ]);
+
+        $duomenys = $this->gautiSuvestinesDuomenis($request);
+
+        $pdf = Pdf::loadView('suvestine.pdf', $duomenys);
+
+        $failoPavadinimas = $duomenys['menuo']
+            ? 'suvestine-' . $duomenys['menuo'] . '.pdf'
+            : 'visa-suvestine.pdf';
+
+        Mail::send([], [], function ($message) use ($request, $pdf, $failoPavadinimas, $duomenys) {
+        $periodas = $duomenys['menuo'] ? $duomenys['menuo'] : 'Visi mėnesiai';
+
+            $message
+            ->to($request->email)
+            ->subject('Finansų suvestinė PDF')
+            ->html('Sveiki,<br><br>PDF faile rasite finansų suvestinę.<br><br>Periodas: <b>' . $periodas . '</b>')
+            ->attachData(
+                $pdf->output(),
+                $failoPavadinimas,
+                ['mime' => 'application/pdf']
+            );
+        });
+
+    return back()->with('success', 'PDF suvestinė išsiųsta el. paštu.');
+}
 }
