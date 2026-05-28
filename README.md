@@ -24,15 +24,17 @@ Naudojamos integracines programos:
 
  ## Projekto struktūra
 
- app/Http/Controllers/
-        FinansaiController.php     # CRUD finansų įrašams
-        KategorijaController.php   # CRUD kategorijoms
-        SuvestineController.php    # Ataskaitos, PDF, el. paštas
-    Models/
-        Finansai.php               # Finansų įrašo modelis
-        Kategorija.php             # Kategorijos modelis
-database/
-    migrations/                    # Duomenų bazės lentelių struktūra
-resources/views/                   # Blade šablonai
-routes/
-    web.php                        # Visi maršrutai
+1. app/Http/Controllers/  <br>
+-------- FinansaiController.php     # CRUD finansų įrašams<br>
+-------- KategorijaController.php   # CRUD kategorijoms<br>
+-------- SuvestineController.php    # Ataskaitos, PDF, el. paštas<br>
+2.  Models/ <br>
+-------- Finansai.php               # Finansų įrašo modelis<br>
+-------- Kategorija.php             # Kategorijos modelis<br>
+3. database/  <br>
+-------- migrations/                   # Duomenų bazės lentelių struktūra<br>
+4. resources/views/     <br>                 # Blade šablonai<br>
+5. routes/ <br>
+-------- web.php                     # Visi maršrutai<br>
+
+    
