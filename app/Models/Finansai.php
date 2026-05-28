@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Finansai extends Model
 {
     protected $fillable = [
+        'user_id', 
         'tipas',
         'kategorija_id',
         'suma',
