@@ -6,25 +6,25 @@
             Suvestinė
         </h1>
 
-        <form method="GET" class="mb-6">
+        <form method="GET" class="mb-6 flex gap-3 items-center">
 
-            <select
-                    name="menuo"
-                    onchange="this.form.submit()"
-                    class="border rounded-lg px-8 py-2"
-                >
+            <select name="menuo" onchange="this.form.submit()" class="border rounded-lg px-8 py-2">
+            
+            <option value="">Visi</option>
 
-                    <option value=""> Visi </option>
-
-                @foreach($menesiList as $m)
-                    <option
-                        value="{{ $m }}"
-                            {{ $menuo == $m ? 'selected' : '' }}>
-                            {{ $m }}
-                    </option>
-                @endforeach
+            @foreach($menesiList as $m)
+                <option
+                    value="{{ $m }}"
+                    {{ $menuo == $m ? 'selected' : '' }}>
+                    {{ $m }}
+                </option>
+            @endforeach
 
             </select>
+
+            <a href="{{ route('suvestine.pdf', ['menuo' => $menuo]) }}" class="bg-red-600 hover:bg-red-700 text-white px-5 py-2 rounded-lg font-semibold">
+                Atsisiųsti PDF
+            </a>
 
         </form>
 
