@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Auth;
 
 class SuvestineController extends Controller
 {
@@ -29,7 +30,7 @@ class SuvestineController extends Controller
     private function gautiSuvestinesDuomenis(Request $request)
     {
         $menuo = $request->menuo;
-        $query = Finansai::query();
+        $query = Finansai::query()->where('user_id', Auth::id());
 
         if ($menuo) {
             $query->whereRaw("DATE_FORMAT(data, '%Y-%m') = ?", [$menuo]);
@@ -60,18 +61,19 @@ class SuvestineController extends Controller
             $pagalMenesiQuery->whereRaw("DATE_FORMAT(data, '%Y-%m') = ?", [$menuo]);
         }
 
-        $pagalMenesi = $pagalMenesiQuery
-            ->select(
-                DB::raw("DATE_FORMAT(data, '%Y-%m') as menuo"),
-                DB::raw("COALESCE(SUM(CASE WHEN tipas = 'pajamos' THEN suma ELSE 0 END),0) as pajamos"),
-                DB::raw("COALESCE(SUM(CASE WHEN tipas = 'islaidos' THEN suma ELSE 0 END),0) as islaidos")
-            )
+        $pagalMenesi = Finansai::query()
+        ->where('user_id', Auth::id())
+        ->select(
+            DB::raw("DATE_FORMAT(data, '%Y-%m') as menuo"),
+            DB::raw("COALESCE(SUM(CASE WHEN tipas = 'pajamos' THEN suma ELSE 0 END),0) as pajamos"),
+            DB::raw("COALESCE(SUM(CASE WHEN tipas = 'islaidos' THEN suma ELSE 0 END),0) as islaidos")
+        )
+        ->groupBy('menuo')
+        ->orderBy('menuo')
+        ->get();
 
-            ->groupBy('menuo')
-            ->orderBy('menuo')
-            ->get();
-
-        $menesiList = Finansai::selectRaw("DATE_FORMAT(data, '%Y-%m') as menuo")
+        $menesiList = Finansai::where('user_id', Auth::id())
+            ->selectRaw("DATE_FORMAT(data, '%Y-%m') as menuo")
             ->distinct()
             ->orderBy('menuo')
             ->pluck('menuo');
