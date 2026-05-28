@@ -6,27 +6,60 @@
             Suvestinė
         </h1>
 
-        <form method="GET" class="mb-6 flex gap-3 items-center">
+        <div class="mb-6 flex flex-wrap gap-3 items-center">
 
-            <select name="menuo" onchange="this.form.submit()" class="border rounded-lg px-8 py-2">
-            
-            <option value="">Visi</option>
+            <form method="GET" action="{{ route('suvestine') }}">
+                <select
+                    name="menuo"
+                    onchange="this.form.submit()"
+                    class="border rounded-lg px-8 py-2"
+        >
+                    <option value="">Visi</option>
 
-            @foreach($menesiList as $m)
-                <option
-                    value="{{ $m }}"
-                    {{ $menuo == $m ? 'selected' : '' }}>
-                    {{ $m }}
-                </option>
-            @endforeach
+                    @foreach($menesiList as $m)
+                        <option value="{{ $m }}" {{ $menuo == $m ? 'selected' : '' }}>
+                            {{ $m }}
+                        </option>
+                    @endforeach
+                </select>
+            </form>
 
-            </select>
-
-            <a href="{{ route('suvestine.pdf', ['menuo' => $menuo]) }}" class="bg-red-600 hover:bg-red-700 text-white px-5 py-2 rounded-lg font-semibold">
+            <a
+                href="{{ route('suvestine.pdf', ['menuo' => $menuo]) }}"
+                class="bg-red-600 hover:bg-red-700 text-white px-5 py-2 rounded-lg font-semibold"
+            >
                 Atsisiųsti PDF
             </a>
 
-        </form>
+            <form
+                method="POST"
+                action="{{ route('suvestine.pdf.email') }}"
+                class="flex gap-3 items-center"
+            >
+                @csrf
+
+                <input
+                    type="hidden"
+                    name="menuo"
+                    value="{{ $menuo }}"
+                >
+
+                <input
+                    type="email"
+                    name="email"
+                    placeholder="Įveskite el. paštą"
+                    class="border rounded-lg px-4 py-2"
+                    required
+                >
+
+                <button
+                    type="submit"
+                    class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg font-semibold"
+                >
+                    Siųsti į el. paštą
+                </button>
+            </form>
+        </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
 
